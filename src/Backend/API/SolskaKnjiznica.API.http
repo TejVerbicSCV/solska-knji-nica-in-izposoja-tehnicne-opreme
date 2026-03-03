@@ -1,0 +1,6 @@
+@SolskaKnjiznica.API_HostAddress = http://localhost:5123
+
+GET {{SolskaKnjiznica.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
