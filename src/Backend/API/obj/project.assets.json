@@ -33,6 +33,29 @@
             "related": ".pdb;.xml"
           }
         }
+      },
+      "SolskaKnjiznica.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/SolskaKnjiznica.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SolskaKnjiznica.Core.dll": {}
+        }
+      },
+      "SolskaKnjiznica.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "SolskaKnjiznica.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SolskaKnjiznica.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SolskaKnjiznica.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -67,27 +90,39 @@
         "microsoft.openapi.1.6.17.nupkg.sha512",
         "microsoft.openapi.nuspec"
       ]
+    },
+    "SolskaKnjiznica.Core/1.0.0": {
+      "type": "project",
+      "path": "../Core/SolskaKnjiznica.Core.csproj",
+      "msbuildProject": "../Core/SolskaKnjiznica.Core.csproj"
+    },
+    "SolskaKnjiznica.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../Infrastructure/SolskaKnjiznica.Infrastructure.csproj",
+      "msbuildProject": "../Infrastructure/SolskaKnjiznica.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "Microsoft.AspNetCore.OpenApi >= 9.0.9"
+      "Microsoft.AspNetCore.OpenApi >= 9.0.9",
+      "SolskaKnjiznica.Core >= 1.0.0",
+      "SolskaKnjiznica.Infrastructure >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\TejWork\\.nuget\\packages\\": {}
+    "C:\\Users\\adime\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj",
+      "projectUniqueName": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj",
       "projectName": "SolskaKnjiznica.API",
-      "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj",
-      "packagesPath": "C:\\Users\\TejWork\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\obj\\",
+      "projectPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj",
+      "packagesPath": "C:\\Users\\adime\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\TejWork\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\adime\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -100,7 +135,14 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj": {
+              "projectPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj"
+            },
+            "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -143,7 +185,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
