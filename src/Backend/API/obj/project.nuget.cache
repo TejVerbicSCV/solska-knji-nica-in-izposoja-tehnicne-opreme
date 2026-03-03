@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "gFnbmYKAB+E=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\TejWork\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.9\\microsoft.aspnetcore.openapi.9.0.9.nupkg.sha512",
+    "C:\\Users\\TejWork\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
