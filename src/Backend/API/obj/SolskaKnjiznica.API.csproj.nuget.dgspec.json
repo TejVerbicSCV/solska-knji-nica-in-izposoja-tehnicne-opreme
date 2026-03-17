@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj": {}
+    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\api\\SolskaKnjiznica.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj": {
+    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\api\\SolskaKnjiznica.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj",
+        "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\api\\SolskaKnjiznica.API.csproj",
         "projectName": "SolskaKnjiznica.API",
-        "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\SolskaKnjiznica.API.csproj",
+        "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\api\\SolskaKnjiznica.API.csproj",
         "packagesPath": "C:\\Users\\TejWork\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\API\\obj\\",
+        "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\TejWork\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -27,7 +27,14 @@
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj": {
+                "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj"
+              },
+              "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -66,6 +73,142 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj",
+        "projectName": "SolskaKnjiznica.Core",
+        "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj",
+        "packagesPath": "C:\\Users\\TejWork\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\TejWork\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj",
+        "projectName": "SolskaKnjiznica.Infrastructure",
+        "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\TejWork\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\TejWork\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj": {
+                "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

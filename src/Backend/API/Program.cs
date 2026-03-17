@@ -1,6 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using SolskaKnjiznica.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -18,6 +24,23 @@ var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
+app.MapGet("/health/db", async (IConfiguration config) =>
+{
+    try
+    {
+        var connStr = config.GetConnectionString("DefaultConnection");
+        using var conn = new Npgsql.NpgsqlConnection(connStr);
+        await conn.OpenAsync();
+        return Results.Ok("Connected to Supabase");
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(detail: ex.ToString(), statusCode: 500);
+    }
+})
+.WithName("HealthCheckDb");
+
 
 app.MapGet("/weatherforecast", () =>
 {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj": {}
+    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj": {
+    "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj",
+        "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj",
         "projectName": "SolskaKnjiznica.Core",
-        "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj",
+        "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj",
         "packagesPath": "C:\\Users\\TejWork\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\obj\\",
+        "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\TejWork\\AppData\\Roaming\\NuGet\\NuGet.Config",

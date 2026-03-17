@@ -1,0 +1,12 @@
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\bin\Debug\net9.0\SolskaKnjiznica.Core.deps.json
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\bin\Debug\net9.0\SolskaKnjiznica.Core.dll
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\bin\Debug\net9.0\SolskaKnjiznica.Core.pdb
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\SolskaKnjiznica.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\SolskaKnjiznica.Core.AssemblyInfoInputs.cache
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\SolskaKnjiznica.Core.AssemblyInfo.cs
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\SolskaKnjiznica.Core.csproj.CoreCompileInputs.cache
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\SolskaKnjiznica.Core.sourcelink.json
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\SolskaKnjiznica.Core.dll
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\refint\SolskaKnjiznica.Core.dll
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\SolskaKnjiznica.Core.pdb
+C:\Users\TejWork\Documents\GitHub\solska-knji-nica-in-izposoja-tehnicne-opreme\src\Backend\Core\obj\Debug\net9.0\ref\SolskaKnjiznica.Core.dll
