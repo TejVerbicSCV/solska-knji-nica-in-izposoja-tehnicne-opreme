@@ -1,0 +1,29 @@
+## Standard .NET ignores
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vs*
+.vscode/
+
+## Node/Frontend (Vite)
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*.local
+*.log
+
+## OS Specific
+Thumbs.db
+desktop.ini
+.DS_Store
+
+## Other potential conflicts
+out.json
+*.tmp
+temp/
