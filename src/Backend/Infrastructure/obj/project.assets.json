@@ -790,19 +790,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\TejWork\\.nuget\\packages\\": {}
+    "C:\\Users\\adime\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj",
       "projectName": "SolskaKnjiznica.Infrastructure",
-      "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\TejWork\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\obj\\",
+      "projectPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\SolskaKnjiznica.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\adime\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\TejWork\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\adime\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -816,8 +816,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj": {
-              "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj"
+            "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj": {
+              "projectPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj"
             }
           }
         }
@@ -863,8 +863,16 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Infrastructure\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0."
+    }
+  ]
 }

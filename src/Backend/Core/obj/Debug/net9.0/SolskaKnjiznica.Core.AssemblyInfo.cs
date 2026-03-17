@@ -13,7 +13,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SolskaKnjiznica.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa7e695ed4cbddb47bd6741c7b89450bef60eebc")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98906d11aeb458b21a1c49f35f38e822c468c5d1")]
+>>>>>>> c1d1336091f4613b1b028b18ac175abab6bd916c
 [assembly: System.Reflection.AssemblyProductAttribute("SolskaKnjiznica.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SolskaKnjiznica.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
