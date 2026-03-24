@@ -7,6 +7,8 @@ obj/
 *.exe
 *.pdb
 *.cache
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
 *.assets.cache
 *.AssemblyReference.cache
 *.GeneratedMSBuildEditorConfig.editorconfig
