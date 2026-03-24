@@ -1,6 +1,20 @@
 ## Standard .NET ignores
 bin/
 obj/
+**/bin/
+**/obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.assets.cache
+*.AssemblyReference.cache
+*.GeneratedMSBuildEditorConfig.editorconfig
+*.sourcelink.json
+*.nuget.dgspec.json
+*.nuget.g.props
+project.assets.json
+project.nuget.cache
 *.user
 *.suo
 *.userosscache
@@ -27,3 +41,4 @@ desktop.ini
 out.json
 *.tmp
 temp/
+build_output.txt
