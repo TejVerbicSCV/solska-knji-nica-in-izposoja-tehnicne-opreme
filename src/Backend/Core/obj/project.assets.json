@@ -8,19 +8,19 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\adime\\.nuget\\packages\\": {}
+    "C:\\Users\\TejWork\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj",
+      "projectUniqueName": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj",
       "projectName": "SolskaKnjiznica.Core",
-      "projectPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\SolskaKnjiznica.Core.csproj",
-      "packagesPath": "C:\\Users\\adime\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\adime\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\Backend\\Core\\obj\\",
+      "projectPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\SolskaKnjiznica.Core.csproj",
+      "packagesPath": "C:\\Users\\TejWork\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\TejWork\\Documents\\GitHub\\solska-knji-nica-in-izposoja-tehnicne-opreme\\src\\backend\\Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\adime\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\TejWork\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -67,7 +67,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
