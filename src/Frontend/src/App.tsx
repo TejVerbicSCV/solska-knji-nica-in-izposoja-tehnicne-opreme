@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './pages/LoginPage';
 import StudentDashboard from './pages/StudentDashboard';
 import LibrarianDashboard from './pages/LibrarianDashboard';
+import AddItemPage from './pages/AddItemPage';
 import type { User } from './types';
 
 function App() {
@@ -55,6 +56,15 @@ function App() {
           path="/librarian" 
           element={user?.vloga === 'knjiznicar' ? (
             <LibrarianDashboard user={user} onLogout={handleLogout} />
+          ) : (
+            <Navigate to="/login" />
+          )} 
+        />
+
+        <Route 
+          path="/librarian/dodaj-predmet" 
+          element={user?.vloga === 'knjiznicar' ? (
+            <AddItemPage user={user} onLogout={handleLogout} />
           ) : (
             <Navigate to="/login" />
           )} 

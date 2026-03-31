@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SolskaKnjiznica.Infrastructure.Persistence;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
