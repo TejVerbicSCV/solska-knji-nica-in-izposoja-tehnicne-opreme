@@ -1,0 +1,212 @@
+import { useState, useCallback, useEffect, type FC } from 'react';
+import { BookOpen, Laptop, PackageOpen, LayoutGrid, Search, Hash, Filter, Loader2 } from 'lucide-react';
+import Header from '../components/Header';
+import StatCard from '../components/StatCard';
+import ItemCard from '../components/ItemCard';
+import ReservationDialog from '../components/ReservationDialog';
+import Toast from '../components/Toast';
+import type { ToastMessage, ToastType } from '../components/Toast';
+import type { User, LibraryItem } from '../types';
+import { apiService } from '../apiService';
+
+interface StudentDashboardProps {
+  user: User;
+  onLogout: () => void;
+}
+
+const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
+  const [activeTab, setActiveTab] = useState<'knjige' | 'oprema'>('knjige');
+  const [activeSubTab, setActiveSubTab] = useState<'vse' | 'prenosniki' | 'kamere' | 'drugo'>('vse');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedItem, setSelectedItem] = useState<LibraryItem | null>(null);
+  const [items, setItems] = useState<LibraryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  const addToast = useCallback((type: ToastType, message: string) => {
+    setToasts((prev) => [...prev, { id: Math.random().toString(), type, message }]);
+  }, []);
+
+  const removeToast = useCallback((id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const data = await apiService.getItems();
+        setItems(data);
+      } catch (err) {
+        addToast('error', 'Napaka pri nalaganju podatkov.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchItems();
+  }, [addToast]);
+
+  const handleReserve = (item: LibraryItem) => {
+    setSelectedItem(item);
+  };
+
+  const confirmReservation = async (start: string, end: string) => {
+    if (selectedItem) {
+      try {
+        await apiService.reserveItem({
+          itemId: selectedItem.id,
+          userId: user.id,
+          datumOd: start,
+          datumDo: end
+        });
+        addToast('success', `Uspešna rezervacija predmeta ${selectedItem.naziv} od ${start} do ${end}.`);
+        setSelectedItem(null);
+      } catch (err: any) {
+        addToast('error', err.response?.data || 'Napaka pri rezervaciji.');
+      }
+    }
+  };
+
+  const filteredItems = items.filter(item => {
+    const matchesTab = activeTab === 'knjige' ? item.kategorija === 'knjiga' : item.kategorija !== 'knjiga';
+    let matchesSubTab = true;
+    
+    if (activeTab === 'oprema' && activeSubTab !== 'vse') {
+      if (activeSubTab === 'prenosniki') matchesSubTab = item.kategorija === 'prenosnik';
+      else if (activeSubTab === 'kamere') matchesSubTab = item.kategorija === 'kamera';
+      else matchesSubTab = item.kategorija === 'oprema';
+    }
+
+    const matchesSearch = item.naziv.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          item.opis.toLowerCase().includes(searchQuery.toLowerCase());
+                          
+    return matchesTab && matchesSubTab && matchesSearch;
+  });
+
+  return (
+    <div className="min-h-screen bg-slate-50/50 pb-20">
+      <Header user={user} onLogout={onLogout} />
+      
+      <main className="max-w-7xl mx-auto px-4 mt-8 space-y-8">
+        {/* Stats Dashboard */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <StatCard label="Skupaj Predmetov" value={156} icon={Hash} color="primary" />
+          <StatCard label="Na Voljo" value={112} icon={PackageOpen} color="success" />
+          <StatCard label="Izposojeno" value={34} icon={BookOpen} color="info" />
+          <StatCard label="Moje Rezervacije" value={2} icon={Laptop} color="warning" />
+        </div>
+
+        {/* Main Panel */}
+        <div className="bg-white border rounded-3xl border-slate-200 shadow-xl overflow-hidden shadow-slate-200/50">
+          <div className="p-6 border-b border-slate-100 bg-slate-50/50">
+            <h2 className="text-xl font-bold text-slate-900 tracking-tight">Pregled in rezervacije</h2>
+            <p className="text-sm text-slate-500 font-medium mt-1">Iskanje in pregled knjig ter tehnične opreme</p>
+          </div>
+
+          <div className="p-6 pb-0 border-b border-slate-100 flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1 group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={20} />
+              <input 
+                type="text" 
+                placeholder="Iskanje po nazivih in opisih..."
+                className="input pl-12 h-12 w-full text-base bg-slate-50 focus:bg-white"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <button className="btn btn-outline h-12 px-6 bg-slate-50 flex items-center justify-center sm:justify-start">
+              <Filter size={18} />
+              <span>Status Filter</span>
+            </button>
+          </div>
+
+          <div className="border-b border-slate-100 flex overflow-x-auto no-scrollbar">
+            <button 
+              onClick={() => setActiveTab('knjige')}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex items-center gap-2 ${
+                activeTab === 'knjige' 
+                  ? 'border-primary text-primary bg-primary/5' 
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50/50'
+              }`}
+            >
+              <BookOpen size={18} />
+              Knjige
+            </button>
+            <button 
+              onClick={() => { setActiveTab('oprema'); setActiveSubTab('vse'); }}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex items-center gap-2 ${
+                activeTab === 'oprema' 
+                  ? 'border-primary text-primary bg-primary/5' 
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50/50'
+              }`}
+            >
+              <Laptop size={18} />
+              Oprema
+            </button>
+          </div>
+
+          <div className="p-6">
+            {activeTab === 'oprema' && (
+              <div className="flex gap-2 mb-6 overflow-x-auto pb-2 no-scrollbar">
+                {[
+                  { id: 'vse', label: 'Vse', icon: LayoutGrid },
+                  { id: 'prenosniki', label: 'Prenosniki', icon: Laptop },
+                  { id: 'kamere', label: 'Kamere', icon: PackageOpen },
+                  { id: 'drugo', label: 'Druga oprema', icon: PackageOpen },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveSubTab(tab.id as any)}
+                    className={`px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 whitespace-nowrap border transition-all ${
+                      activeSubTab === tab.id 
+                        ? 'bg-slate-800 text-white border-slate-800 shadow-md' 
+                        : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    }`}
+                  >
+                    <tab.icon size={16} />
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 gap-y-6 min-h-[400px]">
+              {loading ? (
+                <div className="col-span-full h-64 flex items-center justify-center">
+                  <Loader2 className="animate-spin text-primary" size={40} />
+                </div>
+              ) : filteredItems.length > 0 ? (
+                filteredItems.map(item => (
+                  <ItemCard 
+                    key={item.id} 
+                    item={item} 
+                    onAction={handleReserve}
+                    actionLabel="Rezerviraj"
+                  />
+                ))
+              ) : (
+                <div className="col-span-1 xl:col-span-2 text-center text-slate-400 py-12 flex flex-col items-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+                  <PackageOpen size={48} className="mb-4 text-slate-300" />
+                  <p className="font-semibold text-lg text-slate-500">Ni najdenih predmetov</p>
+                  <p className="text-sm">Poskusite spremeniti iskalne kriterije.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {selectedItem && (
+        <ReservationDialog 
+          item={selectedItem}
+          isOpen={!!selectedItem}
+          onClose={() => setSelectedItem(null)}
+          onConfirm={confirmReservation}
+        />
+      )}
+
+      <Toast toasts={toasts} onRemove={removeToast} />
+    </div>
+  );
+};
+
+export default StudentDashboard;

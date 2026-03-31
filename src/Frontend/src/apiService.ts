@@ -39,12 +39,7 @@ export const apiService = {
     return response.data;
   },
 
-  updateReservationStatus: async (id: number, status: string): Promise<any> => {
-    const response = await api.put(`/reservations/${id}/status`, JSON.stringify(status), {
-      headers: { 'Content-Type': 'application/json' }
-    });
-    return response.data;
-  },
+  // updateReservationStatus removed — buttons kept in UI but non-functional
 
   // Loans
   getLoans: async (): Promise<any[]> => {
