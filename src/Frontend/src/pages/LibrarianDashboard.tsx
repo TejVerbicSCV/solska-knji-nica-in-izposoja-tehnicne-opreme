@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, type FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import StatCard from '../components/StatCard';
 import Toast from '../components/Toast';
@@ -14,6 +15,7 @@ interface LibrarianDashboardProps {
 }
 
 const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'izposoje' | 'rezervacije'>('izposoje');
   const [searchQuery, setSearchQuery] = useState('');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -89,7 +91,10 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
         user={user} 
         onLogout={onLogout} 
         actions={
-          <button className="btn btn-primary h-9 px-4 text-sm gap-1.5 shadow-md shadow-primary/20 hover:scale-105 active:scale-95 transition-all hidden sm:flex">
+          <button 
+            onClick={() => navigate('/librarian/dodaj-predmet')}
+            className="btn btn-primary h-9 px-4 text-sm gap-1.5 shadow-md shadow-primary/20 hover:scale-105 active:scale-95 transition-all hidden sm:flex"
+          >
             <Plus size={16} />
             Dodaj predmet
           </button>

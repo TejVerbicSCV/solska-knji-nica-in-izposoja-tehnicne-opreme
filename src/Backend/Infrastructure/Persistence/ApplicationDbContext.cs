@@ -38,6 +38,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Avtor>().ToTable("avtorji");
         modelBuilder.Entity<AvtorKnjiga>().ToTable("avtor_knjiga");
 
+        modelBuilder.Entity<Kategorija>().Property(k => k.Id).HasColumnName("id");
+        modelBuilder.Entity<Kategorija>().Property(k => k.Ime).HasColumnName("ime");
+
+        modelBuilder.Entity<Jezik>().Property(j => j.Id).HasColumnName("id");
+        modelBuilder.Entity<Jezik>().Property(j => j.Ime).HasColumnName("ime");
+        modelBuilder.Entity<Jezik>().Property(j => j.Kratica).HasColumnName("kratica");
+
         modelBuilder.Entity<Uporabnik>().Property(u => u.Id).HasColumnName("id");
         modelBuilder.Entity<Uporabnik>().Property(u => u.Email).HasColumnName("email");
         modelBuilder.Entity<Uporabnik>().Property(u => u.GesloHash).HasColumnName("geslo_hash");

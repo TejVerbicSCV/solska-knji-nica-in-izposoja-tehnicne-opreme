@@ -22,6 +22,16 @@ export const apiService = {
     return response.data;
   },
 
+  getLanguages: async (): Promise<any[]> => {
+    const response = await api.get('/jeziki');
+    return response.data;
+  },
+
+  getCategories: async (): Promise<any[]> => {
+    const response = await api.get('/kategorije');
+    return response.data;
+  },
+
   // Items
   getItems: async (): Promise<LibraryItem[]> => {
     const response = await api.get('/items');
@@ -40,6 +50,16 @@ export const apiService = {
   },
 
   // updateReservationStatus removed — buttons kept in UI but non-functional
+
+  addBook: async (bookData: any): Promise<any> => {
+    const response = await api.post('/knjige', bookData);
+    return response.data;
+  },
+
+  addEquipment: async (equipmentData: any): Promise<any> => {
+    const response = await api.post('/oprema', equipmentData);
+    return response.data;
+  },
 
   // Loans
   getLoans: async (): Promise<any[]> => {
