@@ -1,7 +1,8 @@
 import axios from 'axios';
 import type { User, LibraryItem } from './types';
 
-const API_BASE_URL = 'http://localhost:5123/api';
+export const BASE_BACKEND_URL = 'http://localhost:5123';
+const API_BASE_URL = `${BASE_BACKEND_URL}/api`;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -11,6 +12,17 @@ const api = axios.create({
 });
 
 export const apiService = {
+  // Image upload
+  uploadImage: async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await api.post('/upload/image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data.url;
+  },
   // Auth
   login: async (email: string, password: string): Promise<User> => {
     const response = await api.post('/auth/login', { email, password });

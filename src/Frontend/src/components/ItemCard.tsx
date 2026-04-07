@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { BookOpen, Laptop, Camera, Package, MapPin, Hash } from 'lucide-react';
 import type { LibraryItem } from '../types';
+import { BASE_BACKEND_URL } from '../apiService';
 
 interface ItemCardProps {
   item: LibraryItem;
@@ -25,11 +26,15 @@ const ItemCard: FC<ItemCardProps> = ({ item, onAction, actionLabel }) => {
     v_popravilu: { label: 'V popravilu', class: 'badge-repair' },
   };
 
+  const imageUrl = item.slikaUrl?.startsWith('/') 
+    ? `${BASE_BACKEND_URL}${item.slikaUrl}` 
+    : item.slikaUrl;
+
   return (
     <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-lg transition-all flex h-40 group">
       <div className="w-32 sm:w-40 relative flex-shrink-0 bg-slate-100">
-        {item.slika ? (
-          <img src={item.slika} alt={item.naziv} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        {imageUrl ? (
+          <img src={imageUrl} alt={item.naziv} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-slate-400">
             {getIcon()}
