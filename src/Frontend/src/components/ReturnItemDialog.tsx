@@ -1,14 +1,32 @@
 import { type FC, useState } from 'react';
-import { X, AlertCircle } from 'lucide-react';
+import { X, AlertCircle, Camera, Loader2, Check } from 'lucide-react';
+import apiService, { BASE_BACKEND_URL } from '../apiService';
 
 interface ReturnItemDialogProps {
-  onConfirm: (poskodba: string) => void;
+  onConfirm: (poskodba: string, slikaUrl?: string) => void;
   onCancel: () => void;
   itemName: string;
 }
 
 const ReturnItemDialog: FC<ReturnItemDialogProps> = ({ onConfirm, onCancel, itemName }) => {
   const [poskodba, setPoskodba] = useState('');
+  const [slikaUrl, setSlikaUrl] = useState('');
+  const [uploading, setUploading] = useState(false);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setUploading(true);
+      const url = await apiService.uploadImage(file);
+      setSlikaUrl(url);
+    } catch (err) {
+      console.error('File upload failed', err);
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
@@ -38,6 +56,33 @@ const ReturnItemDialog: FC<ReturnItemDialogProps> = ({ onConfirm, onCancel, item
               onChange={(e) => setPoskodba(e.target.value)}
             />
           </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-bold text-slate-700 ml-1">Slika poškodb (neobvezno)</label>
+            <div className="flex items-center gap-3">
+              <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-slate-200 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  {uploading ? (
+                    <Loader2 className="animate-spin text-primary" size={24} />
+                  ) : slikaUrl ? (
+                    <div className="flex items-center gap-2 text-success">
+                      <Check size={20} />
+                      <span className="text-xs font-bold uppercase">Slika naložena</span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center text-slate-400">
+                      <Camera size={24} />
+                      <span className="text-[10px] font-bold mt-1 uppercase">Kliknite za upload</span>
+                    </div>
+                  )}
+                </div>
+                <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+              </label>
+              {slikaUrl && (
+                <img src={slikaUrl.startsWith('/') ? `${BASE_BACKEND_URL}${slikaUrl}` : slikaUrl} className="w-24 h-24 object-cover rounded-2xl shadow-sm" alt="Thumbnail" />
+              )}
+            </div>
+          </div>
         </div>
 
         <div className="px-6 py-5 bg-slate-50/50 flex gap-3">
@@ -48,8 +93,9 @@ const ReturnItemDialog: FC<ReturnItemDialogProps> = ({ onConfirm, onCancel, item
             Prekliči
           </button>
           <button 
-            onClick={() => onConfirm(poskodba)}
-            className="flex-1 btn btn-primary rounded-xl h-12 font-bold shadow-lg shadow-primary/20"
+            onClick={() => onConfirm(poskodba, slikaUrl)}
+            disabled={uploading}
+            className="flex-1 btn btn-primary rounded-xl h-12 font-bold shadow-lg shadow-primary/20 disabled:opacity-50"
           >
             Potrdi vračilo
           </button>

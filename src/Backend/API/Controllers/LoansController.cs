@@ -60,6 +60,7 @@ public class LoansController : ControllerBase
             {
                 Datum = DateTime.UtcNow,
                 Opis = request.PoskodbaOpis,
+                SlikaUrl = request.PoskodbaSlikaUrl,
                 IzposojeId = loan.Id,
                 DijakiId = loan.DijakiId
             };
