@@ -9,14 +9,12 @@ export interface User {
 }
 
 export interface LibraryItem {
-  id: number;
-  ime?: string;
-  naslov?: string;
-  isbn?: string;
-  leto?: number;
-  stevilo: number;
-  slika_url?: string;
-  opis?: string;
-  serijska_st?: string;
-  tip: 'knjiga' | 'oprema';
+  id: string;
+  naziv: string;
+  opis: string;
+  kategorija: string;
+  inventarnaStevilka: string;
+  lokacija: string;
+  status: 'na_voljo' | 'izposojeno' | 'rezervirano' | 'v_popravilu';
+  slikaUrl?: string;
 }

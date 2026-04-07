@@ -52,10 +52,13 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
     fetchData();
   }, [fetchData]);
 
-  const handleReturnConfirm = async (poskodba: string) => {
+  const handleReturnConfirm = async (poskodba: string, slikaUrl?: string) => {
     if (!returnItem) return;
     try {
-      await apiService.returnItem(returnItem.id, { poskodbaOpis: poskodba });
+      await apiService.returnItem(returnItem.id, { 
+        poskodbaOpis: poskodba,
+        poskodbaSlikaUrl: slikaUrl 
+      });
       addToast('success', `Uspešno vrnjeno: ${returnItem.itemName}`);
       setReturnItem(null);
       fetchData();

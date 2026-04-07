@@ -2,7 +2,7 @@ import { useState, useEffect, type FC, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Toast from '../components/Toast';
-import apiService from '../apiService';
+import apiService, { BASE_BACKEND_URL } from '../apiService';
 import type { User } from '../types';
 import type { ToastMessage, ToastType } from '../components/Toast';
 import { ArrowLeft, Book, Package, Save, Loader2 } from 'lucide-react';
@@ -65,6 +65,26 @@ const AddItemPage: FC<AddItemPageProps> = ({ user, onLogout }) => {
 
   const removeToast = (id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, target: 'knjige' | 'predmeti') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setLoading(true);
+      const url = await apiService.uploadImage(file);
+      if (target === 'knjige') {
+        setKnjigaForm(prev => ({ ...prev, slikaUrl: url }));
+      } else {
+        setPredmetForm(prev => ({ ...prev, slikaUrl: url }));
+      }
+      addToast('success', 'Slika uspešno naložena!');
+    } catch (err: any) {
+      addToast('error', 'Napaka pri nalaganju slike: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -167,8 +187,25 @@ const AddItemPage: FC<AddItemPageProps> = ({ user, onLogout }) => {
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-sm font-bold text-slate-700">URL slike (neobvezno)</label>
-                    <input type="text" className="input bg-slate-50 focus:bg-white w-full h-11" placeholder="https://..." value={knjigaForm.slikaUrl} onChange={(e) => setKnjigaForm({...knjigaForm, slikaUrl: e.target.value})} />
+                    <label className="text-sm font-bold text-slate-700">Slika predmeta (Naloži datoteko)</label>
+                    <div className="flex flex-col gap-2">
+                       <input 
+                         type="file" 
+                         accept="image/*"
+                         className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all text-slate-500 cursor-pointer"
+                         onChange={(e) => handleFileChange(e, 'knjige')} 
+                       />
+                       {knjigaForm.slikaUrl && (
+                         <div className="p-2 border border-slate-100 rounded-xl bg-slate-50 flex items-center gap-3">
+                           <img 
+                             src={knjigaForm.slikaUrl.startsWith('/') ? `${BASE_BACKEND_URL}${knjigaForm.slikaUrl}` : knjigaForm.slikaUrl} 
+                             className="w-12 h-16 object-cover rounded-md shadow-sm" 
+                             alt="Thumbnail" 
+                           />
+                           <span className="text-xs text-slate-500 truncate font-mono">{knjigaForm.slikaUrl}</span>
+                         </div>
+                       )}
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -202,8 +239,25 @@ const AddItemPage: FC<AddItemPageProps> = ({ user, onLogout }) => {
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-sm font-bold text-slate-700">URL slike (neobvezno)</label>
-                    <input type="text" className="input bg-slate-50 focus:bg-white w-full h-11" placeholder="https://..." value={predmetForm.slikaUrl} onChange={(e) => setPredmetForm({...predmetForm, slikaUrl: e.target.value})} />
+                    <label className="text-sm font-bold text-slate-700">Slika opreme (Naloži datoteko)</label>
+                    <div className="flex flex-col gap-2">
+                       <input 
+                         type="file" 
+                         accept="image/*"
+                         className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all text-slate-500 cursor-pointer"
+                         onChange={(e) => handleFileChange(e, 'predmeti')} 
+                       />
+                       {predmetForm.slikaUrl && (
+                         <div className="p-2 border border-slate-100 rounded-xl bg-slate-50 flex items-center gap-3">
+                           <img 
+                             src={predmetForm.slikaUrl.startsWith('/') ? `${BASE_BACKEND_URL}${predmetForm.slikaUrl}` : predmetForm.slikaUrl} 
+                             className="w-16 h-12 object-cover rounded-md shadow-sm" 
+                             alt="Thumbnail" 
+                           />
+                           <span className="text-xs text-slate-500 truncate font-mono">{predmetForm.slikaUrl}</span>
+                         </div>
+                       )}
+                    </div>
                   </div>
                 </div>
               )}
