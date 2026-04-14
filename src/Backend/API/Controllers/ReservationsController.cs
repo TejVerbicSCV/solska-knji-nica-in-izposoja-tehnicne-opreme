@@ -35,7 +35,8 @@ public class ReservationsController : ControllerBase
                       : r.OpremaId.HasValue && oprema.TryGetValue(r.OpremaId.Value, out var o) ? o.Ime 
                       : "Neznan predmet",
             StudentName = r.DijakiId.HasValue && uporabniki.TryGetValue(r.DijakiId.Value, out var u) 
-                         ? $"{u.Ime} {u.Priimek}" : "Neznan dijak"
+                         ? $"{u.Ime} {u.Priimek}" : "Neznan dijak",
+            StudentId = r.DijakiId?.ToString()
         });
 
         return Ok(result);

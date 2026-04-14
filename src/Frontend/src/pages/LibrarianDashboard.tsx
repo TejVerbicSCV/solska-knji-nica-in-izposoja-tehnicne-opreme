@@ -22,6 +22,7 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
   const [loading, setLoading] = useState(true);
   const [reservations, setReservations] = useState<any[]>([]);
   const [loans, setLoans] = useState<any[]>([]);
+  const [items, setItems] = useState<any[]>([]);
   const [returnItem, setReturnItem] = useState<any | null>(null);
 
   const addToast = useCallback((type: ToastType, message: string) => {
@@ -35,12 +36,14 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [resData, loanData] = await Promise.all([
+      const [resData, loanData, itemsData] = await Promise.all([
         apiService.getReservations(),
-        apiService.getLoans()
+        apiService.getLoans(),
+        apiService.getItems()
       ]);
       setReservations(resData);
       setLoans(loanData);
+      setItems(itemsData);
     } catch (err: any) {
       addToast('error', 'Napaka pri nalaganju podatkov.');
     } finally {
@@ -107,10 +110,10 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
       <main className="max-w-7xl mx-auto px-4 mt-8 space-y-8">
         {/* Stats Dashboard */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard label="Aktivne Izposoje" value={loans.filter(l => l.status === 'v_teku').length} icon={Briefcase} color="info" />
-          <StatCard label="Nove Rezervacije" value={reservations.filter(r => r.status === 'aktivna').length} icon={BellRing} color="warning" />
-          <StatCard label="Zamudniki" value={0} icon={Users} color="destructive" />
-          <StatCard label="Skupaj Predmetov" value={156} icon={PackageOpen} color="primary" />
+          <StatCard label="Aktivne Izposoje" value={loans.filter(l => (l.status || '').toLowerCase() === 'v_teku').length} icon={Briefcase} color="info" />
+          <StatCard label="Nove Rezervacije" value={reservations.filter(r => (r.status || '').toLowerCase() === 'aktivna').length} icon={BellRing} color="warning" />
+          <StatCard label="Zamudniki" value={loans.filter(l => (l.status || '').toLowerCase() === 'v_teku' && new Date(l.datumIzposoje).getTime() + (14 * 24 * 60 * 60 * 1000) < Date.now()).length} icon={Users} color="destructive" />
+          <StatCard label="Skupaj Predmetov" value={items.length} icon={PackageOpen} color="primary" />
         </div>
 
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden shadow-slate-200/50">

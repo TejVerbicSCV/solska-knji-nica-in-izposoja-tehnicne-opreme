@@ -20,6 +20,7 @@ const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState<LibraryItem | null>(null);
   const [items, setItems] = useState<LibraryItem[]>([]);
+  const [reservations, setReservations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
@@ -32,17 +33,22 @@ const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
   }, []);
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchData = async () => {
+      setLoading(true);
       try {
-        const data = await apiService.getItems();
-        setItems(data);
+        const [itemsData, resData] = await Promise.all([
+          apiService.getItems(),
+          apiService.getReservations()
+        ]);
+        setItems(itemsData);
+        setReservations(resData);
       } catch (err) {
         addToast('error', 'Napaka pri nalaganju podatkov.');
       } finally {
         setLoading(false);
       }
     };
-    fetchItems();
+    fetchData();
   }, [addToast]);
 
   const handleReserve = (item: LibraryItem) => {
@@ -89,10 +95,10 @@ const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
       <main className="max-w-7xl mx-auto px-4 mt-8 space-y-8">
         {/* Stats Dashboard */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard label="Skupaj Predmetov" value={156} icon={Hash} color="primary" />
-          <StatCard label="Na Voljo" value={112} icon={PackageOpen} color="success" />
-          <StatCard label="Izposojeno" value={34} icon={BookOpen} color="info" />
-          <StatCard label="Moje Rezervacije" value={2} icon={Laptop} color="warning" />
+          <StatCard label="Skupaj Predmetov" value={items.length} icon={Hash} color="primary" />
+          <StatCard label="Na Voljo" value={items.filter(i => i.status === 'na_voljo').length} icon={PackageOpen} color="success" />
+          <StatCard label="Izposojeno" value={items.filter(i => i.status === 'izposojeno').length} icon={BookOpen} color="info" />
+          <StatCard label="Moje Rezervacije" value={reservations.filter(r => r.studentId === user.id.toString() && (r.status || '').toLowerCase() === 'aktivna').length} icon={Laptop} color="warning" />
         </div>
 
         {/* Main Panel */}
