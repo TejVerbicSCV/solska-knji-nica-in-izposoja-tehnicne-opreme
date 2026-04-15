@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, type FC } from 'react';
-import { BookOpen, Laptop, PackageOpen, LayoutGrid, Search, Hash, Filter, Loader2 } from 'lucide-react';
+import { BookOpen, Laptop, PackageOpen, LayoutGrid, Search, Hash, Filter, Loader2, BellRing, Briefcase } from 'lucide-react';
 import Header from '../components/Header';
 import StatCard from '../components/StatCard';
 import ItemCard from '../components/ItemCard';
@@ -15,12 +15,13 @@ interface StudentDashboardProps {
 }
 
 const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
-  const [activeTab, setActiveTab] = useState<'knjige' | 'oprema'>('knjige');
+  const [activeTab, setActiveTab] = useState<'knjige' | 'oprema' | 'rezervacije' | 'izposojeno'>('knjige');
   const [activeSubTab, setActiveSubTab] = useState<'vse' | 'prenosniki' | 'kamere' | 'drugo'>('vse');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState<LibraryItem | null>(null);
   const [items, setItems] = useState<LibraryItem[]>([]);
   const [reservations, setReservations] = useState<any[]>([]);
+  const [loans, setLoans] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
@@ -36,12 +37,14 @@ const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [itemsData, resData] = await Promise.all([
+        const [itemsData, resData, loansData] = await Promise.all([
           apiService.getItems(),
-          apiService.getReservations()
+          apiService.getReservations(),
+          apiService.getLoans()
         ]);
         setItems(itemsData);
         setReservations(resData);
+        setLoans(loansData);
       } catch (err) {
         addToast('error', 'Napaka pri nalaganju podatkov.');
       } finally {
@@ -148,6 +151,28 @@ const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
               <Laptop size={18} />
               Oprema
             </button>
+            <button 
+              onClick={() => setActiveTab('rezervacije')}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex items-center gap-2 ${
+                activeTab === 'rezervacije' 
+                  ? 'border-primary text-primary bg-primary/5' 
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50/50'
+              }`}
+            >
+              <BellRing size={18} />
+              Moje Rezervacije
+            </button>
+            <button 
+              onClick={() => setActiveTab('izposojeno')}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex items-center gap-2 ${
+                activeTab === 'izposojeno' 
+                  ? 'border-primary text-primary bg-primary/5' 
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50/50'
+              }`}
+            >
+              <Briefcase size={18} />
+              Izposojeno
+            </button>
           </div>
 
           <div className="p-6">
@@ -175,8 +200,81 @@ const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
               </div>
             )}
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 gap-y-6 min-h-[400px]">
-              {loading ? (
+            {activeTab === 'rezervacije' ? (
+                <div className="overflow-x-auto rounded-2xl border border-slate-100">
+                  <table className="w-full text-left border-collapse">
+                    <thead className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider">
+                      <tr>
+                        <th className="px-6 py-4">Predmet</th>
+                        <th className="px-6 py-4">Datum od</th>
+                        <th className="px-6 py-4">Datum do</th>
+                        <th className="px-6 py-4">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {reservations.filter(r => r.studentId === user.id.toString()).length === 0 ? (
+                        <tr>
+                          <td colSpan={4} className="px-6 py-12 text-center text-slate-400">
+                             <BellRing size={40} className="mx-auto mb-3 opacity-20" />
+                             Nimate aktivnih rezervacij
+                          </td>
+                        </tr>
+                      ) : (
+                        reservations.filter(r => r.studentId === user.id.toString()).map(res => (
+                          <tr key={res.id} className="hover:bg-slate-50/50 transition-colors group">
+                            <td className="px-6 py-4 font-semibold text-slate-700">{res.itemName}</td>
+                            <td className="px-6 py-4 text-slate-500 font-medium">{res.datumOd}</td>
+                            <td className="px-6 py-4 text-slate-500 font-medium text-warning">{res.datumDo}</td>
+                            <td className="px-6 py-4">
+                              <span className={`badge ${res.status === 'potrjena' ? 'badge-success' : res.status === 'zavrnjena' ? 'bg-destructive/10 text-destructive border border-destructive/20' : 'bg-warning/10 text-warning border border-warning/20'} capitalize`}>
+                                {res.status}
+                              </span>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+            ) : activeTab === 'izposojeno' ? (
+                <div className="overflow-x-auto rounded-2xl border border-slate-100">
+                  <table className="w-full text-left border-collapse">
+                    <thead className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider">
+                      <tr>
+                        <th className="px-6 py-4">Predmet</th>
+                        <th className="px-6 py-4">Datum izposoje</th>
+                        <th className="px-6 py-4">Konec izposoje (Rok)</th>
+                        <th className="px-6 py-4">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {loans.filter(l => l.studentId === user.id.toString()).length === 0 ? (
+                        <tr>
+                          <td colSpan={4} className="px-6 py-12 text-center text-slate-400">
+                             <Briefcase size={40} className="mx-auto mb-3 opacity-20" />
+                             Nimate izposojenih predmetov
+                          </td>
+                        </tr>
+                      ) : (
+                        loans.filter(l => l.studentId === user.id.toString()).map(loan => (
+                          <tr key={loan.id} className="hover:bg-slate-50/50 transition-colors group">
+                            <td className="px-6 py-4 font-semibold text-slate-700">{loan.itemName}</td>
+                            <td className="px-6 py-4 text-slate-500 font-medium">{loan.datumIzposoje}</td>
+                            <td className="px-6 py-4 text-slate-500 font-medium text-warning">{loan.datumVrnitve}</td>
+                            <td className="px-6 py-4">
+                              <span className={`badge ${loan.status === 'v_teku' ? 'bg-info/10 text-info border border-info/20' : 'badge-success'}`}>
+                                {loan.status === 'v_teku' ? 'Izposojeno' : 'Vrnjeno'}
+                              </span>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 gap-y-6 min-h-[400px]">
+                  {loading ? (
                 <div className="col-span-full h-64 flex items-center justify-center">
                   <Loader2 className="animate-spin text-primary" size={40} />
                 </div>
@@ -197,6 +295,7 @@ const StudentDashboard: FC<StudentDashboardProps> = ({ user, onLogout }) => {
                 </div>
               )}
             </div>
+            )}
           </div>
         </div>
       </main>

@@ -35,7 +35,8 @@ public class LoansController : ControllerBase
                       : l.OpremaId.HasValue && oprema.TryGetValue(l.OpremaId.Value, out var o) ? o.Ime 
                       : "Neznan predmet",
             StudentName = l.DijakiId.HasValue && uporabniki.TryGetValue(l.DijakiId.Value, out var u) 
-                         ? $"{u.Ime} {u.Priimek}" : "Neznan dijak"
+                         ? $"{u.Ime} {u.Priimek}" : "Neznan dijak",
+            StudentId = l.DijakiId?.ToString()
         });
 
         return Ok(result);

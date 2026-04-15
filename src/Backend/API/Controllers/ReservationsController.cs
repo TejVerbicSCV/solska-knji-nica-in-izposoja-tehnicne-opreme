@@ -66,7 +66,35 @@ public class ReservationsController : ControllerBase
         return Ok(reservation);
     }
 
-    // Status update endpoint removed — buttons kept in UI but non-functional
+    [HttpPut("{id}/status")]
+    public async Task<IActionResult> UpdateStatus(int id, [FromBody] StatusRequest request)
+    {
+        var reservation = await _context.Rezervacije.FindAsync(id);
+        if (reservation == null) return NotFound("Rezervacija ne obstaja.");
+
+        reservation.Status = request.Status;
+
+        if (request.Status.ToLower() == "potrjena")
+        {
+            var izposoja = new Izposoje
+            {
+                DatumIzposoje = reservation.DatumOd ?? DateTime.UtcNow,
+                DatumVrnitve = reservation.DatumDo,
+                Status = "v_teku",
+                KnjigeId = reservation.KnjigeId,
+                OpremaId = reservation.OpremaId,
+                DijakiId = reservation.DijakiId ?? 0,
+                PoskodbaOpis = "",
+                PoskodbaSlikaUrl = ""
+            };
+            _context.Izposoje.Add(izposoja);
+        }
+
+        await _context.SaveChangesAsync();
+        return Ok(reservation);
+    }
+
+    public record StatusRequest(string Status);
 
     public record ReservationRequest(string ItemId, string UserId, string DatumOd, string DatumDo);
 }

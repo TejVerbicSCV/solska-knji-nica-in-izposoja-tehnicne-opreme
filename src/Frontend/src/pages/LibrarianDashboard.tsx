@@ -5,9 +5,11 @@ import StatCard from '../components/StatCard';
 import Toast from '../components/Toast';
 import apiService from '../apiService';
 import ReturnItemDialog from '../components/ReturnItemDialog';
+import ItemCard from '../components/ItemCard';
 import type { ToastMessage, ToastType } from '../components/Toast';
 import type { User } from '../types';
-import { PackageOpen, Users, BellRing, Briefcase, Plus, Search, Loader2, CheckCircle2, XCircle, ArrowLeftRight, LogOut } from 'lucide-react';
+import EditItemDialog from '../components/EditItemDialog';
+import { PackageOpen, Users, BellRing, Briefcase, Plus, Search, Loader2, XCircle, ArrowLeftRight, LogOut, Book, Package } from 'lucide-react';
 
 interface LibrarianDashboardProps {
   user: User;
@@ -16,7 +18,7 @@ interface LibrarianDashboardProps {
 
 const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'izposoje' | 'rezervacije'>('izposoje');
+  const [activeTab, setActiveTab] = useState<'izposoje' | 'rezervacije' | 'knjige' | 'oprema'>('izposoje');
   const [searchQuery, setSearchQuery] = useState('');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +26,7 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
   const [loans, setLoans] = useState<any[]>([]);
   const [items, setItems] = useState<any[]>([]);
   const [returnItem, setReturnItem] = useState<any | null>(null);
+  const [editItemId, setEditItemId] = useState<string | null>(null);
 
   const addToast = useCallback((type: ToastType, message: string) => {
     setToasts((prev) => [...prev, { id: Math.random().toString(), type, message }]);
@@ -79,6 +82,38 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
     l.itemName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     l.studentName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const filteredItems = items.filter(i => 
+    i.naziv.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    i.inventarnaStevilka.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleDeleteItem = async (id: string, itemName: string) => {
+    if (!window.confirm(`Ali ste prepričani, da želite izbrisati: ${itemName}?`)) return;
+    try {
+      const type = id.split('-')[0];
+      const actualId = parseInt(id.split('-')[1], 10);
+      if (type === 'k') {
+        await apiService.deleteBook(actualId);
+      } else {
+        await apiService.deleteEquipment(actualId);
+      }
+      addToast('success', 'Uspešno izbrisano.');
+      fetchData();
+    } catch (err) {
+      addToast('error', 'Napaka pri brisanju. Preverite, ali so povezane izposoje.');
+    }
+  };
+
+  const handleUpdateReservationStatus = async (id: number, status: string) => {
+    try {
+      await apiService.updateReservationStatus(id, status);
+      addToast('success', `Rezervacija označena kot ${status}.`);
+      fetchData();
+    } catch (err) {
+      addToast('error', 'Napaka pri posodabljanju rezervacije.');
+    }
+  };
 
   const getStatusBadge = (status: string) => {
     switch (status.toLowerCase()) {
@@ -153,6 +188,28 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
                 <span className="bg-warning text-white text-[10px] px-2 py-0.5 rounded-full ml-1 font-bold">{reservations.filter(r => r.status === 'aktivna').length}</span>
               )}
             </button>
+            <button 
+              onClick={() => setActiveTab('knjige')}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex items-center gap-2 ${
+                activeTab === 'knjige' 
+                  ? 'border-primary text-primary bg-primary/5' 
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50/50'
+              }`}
+            >
+              <Book size={18} />
+              Knjige
+            </button>
+            <button 
+              onClick={() => setActiveTab('oprema')}
+              className={`px-6 py-4 text-sm font-semibold transition-all whitespace-nowrap border-b-2 flex items-center gap-2 ${
+                activeTab === 'oprema' 
+                  ? 'border-primary text-primary bg-primary/5' 
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50/50'
+              }`}
+            >
+              <Package size={18} />
+              Oprema
+            </button>
           </div>
 
           <div className="p-6">
@@ -199,7 +256,7 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
                       ) : (
                         filteredReservations.map(res => (
                           <tr key={res.id} className="hover:bg-slate-50/50 transition-colors group">
-                            <td className="px-6 py-4 px-6 py-4">
+                            <td className="px-6 py-4">
                               <span className="font-semibold text-slate-700">{res.itemName}</span>
                             </td>
                             <td className="px-6 py-4">
@@ -222,16 +279,16 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
                                 {res.status === 'aktivna' && (
                                   <>
                                     <button 
-                                      className="p-2 text-success/50 rounded-lg cursor-not-allowed" 
+                                      onClick={() => handleUpdateReservationStatus(res.id, 'potrjena')}
+                                      className="p-2 text-success hover:bg-success/10 rounded-lg transition-colors" 
                                       title="Pretvori v izposojo"
-                                      disabled
                                     >
                                       <ArrowLeftRight size={20} />
                                     </button>
                                     <button 
-                                      className="p-2 text-destructive/50 rounded-lg cursor-not-allowed" 
+                                      onClick={() => handleUpdateReservationStatus(res.id, 'zavrnjena')}
+                                      className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors" 
                                       title="Prekliči"
-                                      disabled
                                     >
                                       <XCircle size={20} />
                                     </button>
@@ -245,7 +302,7 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
                     </tbody>
                   </table>
                 </div>
-              ) : (
+              ) : activeTab === 'izposoje' ? (
                 <div className="overflow-x-auto rounded-2xl border border-slate-100">
                   <table className="w-full text-left border-collapse">
                     <thead className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider">
@@ -295,11 +352,11 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
                             <td className="px-6 py-4 text-right">
                                 {loan.status === 'v_teku' && (
                                   <button 
-                                    onClick={() => setReturnItem(loan)}
-                                    className="p-2 text-warning hover:bg-warning/10 rounded-lg transition-colors" 
-                                    title="Označi kot vrnjeno"
-                                  >
-                                    <LogOut size={20} />
+                                      onClick={() => setReturnItem(loan)}
+                                      className="px-4 py-2 font-semibold text-sm bg-warning hover:bg-warning/90 text-white rounded-lg transition-colors shadow-sm" 
+                                      title="Označi kot vrnjeno"
+                                    >
+                                      Vrni
                                   </button>
                                 )}
                             </td>
@@ -308,6 +365,25 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
                       )}
                     </tbody>
                   </table>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 gap-y-6 min-h-[400px]">
+                  {filteredItems.filter(i => activeTab === 'knjige' ? i.kategorija === 'knjiga' : i.kategorija !== 'knjiga').length === 0 ? (
+                    <div className="col-span-1 xl:col-span-2 text-center text-slate-400 py-12 flex flex-col items-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+                      {activeTab === 'knjige' ? <Book size={48} className="mb-4 text-slate-300" /> : <Package size={48} className="mb-4 text-slate-300" />}
+                      <p className="font-semibold text-lg text-slate-500">Ni najdenih {activeTab === 'knjige' ? 'knjig' : 'predmetov'}</p>
+                      <p className="text-sm">Poskusite spremeniti iskalne kriterije.</p>
+                    </div>
+                  ) : (
+                    filteredItems.filter(i => activeTab === 'knjige' ? i.kategorija === 'knjiga' : i.kategorija !== 'knjiga').map(item => (
+                      <ItemCard 
+                        key={item.id} 
+                        item={item}
+                        onEdit={() => setEditItemId(item.id)}
+                        onDelete={() => handleDeleteItem(item.id, item.naziv)}
+                      />
+                    ))
+                  )}
                 </div>
               )}
             </div>
@@ -320,6 +396,18 @@ const LibrarianDashboard: FC<LibrarianDashboardProps> = ({ user, onLogout }) => 
           itemName={returnItem.itemName}
           onConfirm={handleReturnConfirm}
           onCancel={() => setReturnItem(null)}
+        />
+      )}
+
+      {editItemId && (
+        <EditItemDialog 
+          itemId={editItemId}
+          onConfirm={() => {
+            setEditItemId(null);
+            addToast('success', 'Uspešno posodobljeno.');
+            fetchData();
+          }}
+          onCancel={() => setEditItemId(null)}
         />
       )}
 

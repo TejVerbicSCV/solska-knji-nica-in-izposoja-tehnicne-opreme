@@ -1,15 +1,17 @@
 import type { FC } from 'react';
-import { BookOpen, Laptop, Camera, Package, MapPin, Hash } from 'lucide-react';
+import { BookOpen, Laptop, Camera, Package, MapPin, Hash, Edit2, Trash2 } from 'lucide-react';
 import type { LibraryItem } from '../types';
 import { BASE_BACKEND_URL } from '../apiService';
 
 interface ItemCardProps {
   item: LibraryItem;
-  onAction: (item: LibraryItem) => void;
-  actionLabel: string;
+  onAction?: (item: LibraryItem) => void;
+  actionLabel?: string;
+  onEdit?: (item: LibraryItem) => void;
+  onDelete?: (item: LibraryItem) => void;
 }
 
-const ItemCard: FC<ItemCardProps> = ({ item, onAction, actionLabel }) => {
+const ItemCard: FC<ItemCardProps> = ({ item, onAction, actionLabel, onEdit, onDelete }) => {
   const getIcon = () => {
     switch (item.kategorija) {
       case 'knjiga': return <BookOpen size={18} />;
@@ -68,13 +70,35 @@ const ItemCard: FC<ItemCardProps> = ({ item, onAction, actionLabel }) => {
             </div>
           </div>
           
-          <button 
-            onClick={() => onAction(item)}
-            className="btn btn-primary h-9 px-4 text-sm"
-            disabled={item.status !== 'na_voljo'}
-          >
-            {actionLabel}
-          </button>
+          <div className="flex gap-2">
+            {onEdit && (
+              <button 
+                onClick={() => onEdit(item)}
+                className="btn btn-outline border-slate-200 hover:bg-slate-50 h-9 px-3 text-slate-600"
+                title="Uredi"
+              >
+                <Edit2 size={16} />
+              </button>
+            )}
+            {onDelete && (
+              <button 
+                onClick={() => onDelete(item)}
+                className="btn btn-outline border-destructive/20 hover:bg-destructive/10 h-9 px-3 text-destructive"
+                title="Izbriši"
+              >
+                <Trash2 size={16} />
+              </button>
+            )}
+            {onAction && actionLabel && (
+              <button 
+                onClick={() => onAction(item)}
+                className="btn btn-primary h-9 px-4 text-sm"
+                disabled={item.status !== 'na_voljo'}
+              >
+                {actionLabel}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
