@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { User, LibraryItem } from './types';
 
-export const BASE_BACKEND_URL = 'http://localhost:5123';
+export const BASE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5123';
 const API_BASE_URL = `${BASE_BACKEND_URL}/api`;
 
 const api = axios.create({
