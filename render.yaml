@@ -13,8 +13,9 @@ services:
         value: http://+:10000
 
   # Frontend Static Site
-  - type: static_site
+  - type: web
     name: knjiznica-frontend
+    env: static
     buildCommand: cd src/Frontend && npm install && npm run build
     staticPublishPath: src/Frontend/dist
     envVars:
