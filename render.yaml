@@ -24,7 +24,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_BACKEND_URL
-        fromService:
-          name: knjiznica-backend
-          type: web
-          property: host
+        value: https://knjiznica-backend.onrender.com
