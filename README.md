@@ -48,16 +48,16 @@ npm run dev
 Spodaj so vizualni prikazi delujoče aplikacije:
 
 ### Nadzorna plošča knjižničarja
-![Nadzorna plošča knjižničarja](/C:/Users/TejWork/.gemini/antigravity/brain/d8135d1a-f5b0-461f-b9a7-9dae72d7d8de/librarian_dashboard_exact_1776447052825.png)
+![Nadzorna plošča knjižničarja](./Slike/knjiznicar.png)
 
 ### Prijava v sistem
-![Prijava](/C:/Users/TejWork/.gemini/antigravity/brain/d8135d1a-f5b0-461f-b9a7-9dae72d7d8de/login_page_exact_1776447080825.png)
+![Prijava](./Slike/prijava.png)
 
 ---
 
 ## 📄 Dokumentacija projekta
 Celotna tehnična dokumentacija v formatu PDF je na voljo na spodnji povezavi:
-- [Povezava do PDF dokumentacije](./Dokumentacija_Projekta.pdf) *(Opomba: Predloži PDF v koren repozitorija)*
+- [Povezava do PDF dokumentacije](./Dokumentacija.pdf)
 
 ---
 
