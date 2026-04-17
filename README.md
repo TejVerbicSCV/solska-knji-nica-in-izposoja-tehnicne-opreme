@@ -1,80 +1,66 @@
-# 📚 Šolska knjižnica in izposoja tehnične opreme
+# Solška knjižnica in izposoja tehnične opreme
 
-Spletna aplikacija za digitalno upravljanje šolske knjižnice in izposojo tehnične opreme (prenosniki, projektorji, tablice). Razvito kot zaključni projekt (matura).
-
-## 🚀 Tehnologije
-- **Frontend:** React 19, TypeScript, Tailwind CSS, Vite
-- **Backend:** .NET 9 Web API
-- **Podatkovna baza:** PostgreSQL (gostovano na Supabase)
-- **Gostovanje:** Render
-- **Dokumentacija:** Swagger/OpenAPI (Scalar)
+Spletna aplikacija za digitalizacijo in avtomatizacijo procesov v šolski knjižnici. Omogoča enostaven pregled inventarja, upravljanje z izposojami ter rezervacijo knjig in tehnične opreme (prenosniki, projektorji) za dijake in učitelje.
 
 ---
 
-## 🛠️ Lokalna namestitev in zagon
+## 🛠️ Tehnološki sklad
 
-### 1. Sistemske zahteve
-- .NET 9 SDK
-- Node.js (priporočena verzija 20+)
-- Git
+### Frontend
+- **React 19 & Vite:** Sodobno in hitro uporabniško okolje.
+- **TypeScript:** Tipiziran JavaScript za varnejšo kodo.
+- **Tailwind CSS:** Prilagodljiva oblika in moderna estetika.
+- **Lucide React:** Knjižnica ikon za boljšo UX izkušnjo.
+- **Axios:** Za komunikacijo z zalednim sistemom.
 
-### 2. Namestitev
-```powershell
-# Kloniranje projekta
-git clone https://github.com/TejVerbicSCV/solska-knji-nica-in-izposoja-tehnicne-opreme.git
-cd solska-knji-nica-in-izposoja-tehnicne-opreme
-```
+### Backend
+- **ASP.NET Core 9.0 (C#):** Zmogljivo in varno zaledje.
+- **Entity Framework Core:** Upravljanje s podatkovno bazo preko ORM.
+- **PostgreSQL:** Relacijska baza podatkov (gostovana na Supabase).
+- **Swashbuckle/Scalar:** Avtomatsko generiranje dokumentacije OpenAPI.
+- **BCrypt.Net:** Varno šifriranje gesel.
 
-### 3. Zagon Backenda
+---
+
+## 🚀 Navodila za zagon
+
+### 1. Zagon zaledja (Backend)
+Potrebujete nameščen .NET 9 SDK.
 ```powershell
 cd src/Backend/API
 dotnet restore
 dotnet run
 ```
-Backend bo tekel na `http://localhost:5123`. Interaktivna dokumentacija je na voljo na `/swagger`.
+Zaledje bo na voljo na: `http://localhost:5123`
 
-### 4. Zagon Frontenda
+### 2. Zagon čelnega dela (Frontend)
+Potrebujete nameščen Node.js.
 ```powershell
 cd src/Frontend
 npm install
 npm run dev
 ```
-Frontend bo tekel na `http://localhost:5173`.
+Čelni del bo na voljo na: `http://localhost:5173`
 
 ---
 
-## 📖 Navodila za uporabo
+## 📸 Zaslonske slike ključnih delov
+Spodaj so vizualni prikazi delujoče aplikacije:
 
-### 👨‍🏫 Za knjižničarje (Administratorje)
-Knjižničar ima dostop do celotnega upravljanja knjižnice preko svoje nadzorne plošče:
-- **Upravljanje inventarja:** Dodajanje novih knjig in opreme preko gumba "Dodaj predmet". Vsakemu predmetu lahko določite naslov, opis, količino in naložite sliko.
-- **Izposoje:** Pregled vseh aktivnih izposoj. Ko dijak vrne predmet, knjižničar klikne gumb "Vrni" in vpiše morebitne poškodbe.
-- **Rezervacije:** Upravljanje s prihajajočimi rezervacijami. Knjižničar lahko rezervacijo potrdi (ko pripravi predmet) ali zavrne.
-- **Urejanje:** Možnost posodabljanja podatkov ali brisanja neustreznih predmetov.
+### Nadzorna plošča knjižničarja
+![Nadzorna plošča knjižničarja](/C:/Users/TejWork/.gemini/antigravity/brain/d8135d1a-f5b0-461f-b9a7-9dae72d7d8de/librarian_dashboard_exact_1776447052825.png)
 
-### 👨‍🎓 Za dijake
-Dijaki lahko po prijavi:
-- Pregledujejo celoten katalog razpoložljivih knjig in tehnične opreme.
-- Oddajo zahtevek za rezervacijo želenega predmeta.
-- Pregledujejo status svojih izposoj in datum potrebe po vračilu.
+### Prijava v sistem
+![Prijava](/C:/Users/TejWork/.gemini/antigravity/brain/d8135d1a-f5b0-461f-b9a7-9dae72d7d8de/login_page_exact_1776447080825.png)
 
 ---
 
-## 🌐 Gostovanje (Produkcija)
-Aplikacija je nastavljena za avtomatsko objavo preko Render Blueprinta (`render.yaml`).
-
-- **Frontend:** [https://knjiznica-frontend.onrender.com](https://knjiznica-frontend.onrender.com)
-- **Backend:** [https://knjiznica-backend.onrender.com](https://knjiznica-backend.onrender.com)
-- **API Dokumentacija:** [https://knjiznica-backend.onrender.com/swagger](https://knjiznica-backend.onrender.com/swagger)
+## 📄 Dokumentacija projekta
+Celotna tehnična dokumentacija v formatu PDF je na voljo na spodnji povezavi:
+- [Povezava do PDF dokumentacije](./Dokumentacija_Projekta.pdf) *(Opomba: Predloži PDF v koren repozitorija)*
 
 ---
 
-## 📂 Struktura projekta
-```text
-├── src/
-│   ├── Backend/      # .NET 9 API, Core in Infrastructure
-│   └── Frontend/     # React aplikacija s TypeScriptom
-├── render.yaml       # Konfiguracija za Render
-├── Dockerfile        # Pakiranje backenda za produkcijo
-└── README.md         # Ta datoteka
-```
+## 📋 Projektno vodenje
+Za načrtovanje in spremljanje razvoja sva uporabila orodje Trello.
+- **Trello tabla:** [Tukaj vstavi povezavo do tvoje Trello table]
