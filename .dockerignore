@@ -1,0 +1,9 @@
+**/.git
+**/bin
+**/obj
+**/node_modules
+src/Frontend/dist
+src/Frontend/node_modules
+.vscode
+*.user
+*.lock.json

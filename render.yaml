@@ -1,0 +1,27 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: knjiznica-backend
+    env: docker
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    plan: free # Change to starter if you need more power
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false # You will enter this in the Render UI
+      - key: ASPNETCORE_URLS
+        value: http://+:10000
+
+  # Frontend Static Site
+  - type: web
+    name: knjiznica-frontend
+    env: static
+    buildCommand: cd src/Frontend && npm install && npm run build
+    staticPublishPath: src/Frontend/dist
+    plan: free
+    envVars:
+      - key: VITE_BACKEND_URL
+        fromService:
+          name: knjiznica-backend
+          type: web
+          property: host
