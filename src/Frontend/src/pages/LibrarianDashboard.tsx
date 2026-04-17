@@ -9,7 +9,7 @@ import ItemCard from '../components/ItemCard';
 import type { ToastMessage, ToastType } from '../components/Toast';
 import type { User } from '../types';
 import EditItemDialog from '../components/EditItemDialog';
-import { PackageOpen, Users, BellRing, Briefcase, Plus, Search, Loader2, XCircle, ArrowLeftRight, LogOut, Book, Package } from 'lucide-react';
+import { PackageOpen, Users, BellRing, Briefcase, Plus, Search, Loader2, XCircle, ArrowLeftRight, Book, Package } from 'lucide-react';
 
 interface LibrarianDashboardProps {
   user: User;
