@@ -63,4 +63,4 @@ Celotna tehnična dokumentacija v formatu PDF je na voljo na spodnji povezavi:
 
 ## 📋 Projektno vodenje
 Za načrtovanje in spremljanje razvoja sva uporabila orodje Trello.
-- **Trello tabla:** [Tukaj vstavi povezavo do tvoje Trello table]
+- **Trello tabla:** [https://trello.com/b/LfQ59JXJ/knji%C5%BEnica]
