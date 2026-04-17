@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { User, LibraryItem } from './types';
 
-let backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5123';
+let backendUrl = (import.meta.env.VITE_BACKEND_URL || 'http://localhost:5123').replace(/\/$/, '');
 if (backendUrl && !backendUrl.startsWith('http')) {
   backendUrl = `https://${backendUrl}`;
 }
