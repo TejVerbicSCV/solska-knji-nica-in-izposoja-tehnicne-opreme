@@ -11,13 +11,6 @@ namespace SolskaKnjiznica.API.Controllers;
 [Route("api/[controller]")]
 public class UploadController : ControllerBase
 {
-    private readonly IWebHostEnvironment _environment;
-
-    public UploadController(IWebHostEnvironment environment)
-    {
-        _environment = environment;
-    }
-
     [HttpPost("image")]
     public async Task<IActionResult> UploadImage(IFormFile file)
     {
@@ -26,33 +19,29 @@ public class UploadController : ControllerBase
             return BadRequest(new { message = "Nobena datoteka ni bila izbrana." });
         }
 
+        if (file.Length > 2 * 1024 * 1024) // Limit to 2MB for base64 storage
+        {
+            return BadRequest(new { message = "Slika je prevelika (omejitev je 2MB)." });
+        }
+
         try
         {
-            // Set storage path: wwwroot/uploads
-            var uploadsPath = Path.Combine(_environment.ContentRootPath, "wwwroot", "uploads");
-
-            if (!Directory.Exists(uploadsPath))
+            using (var ms = new MemoryStream())
             {
-                Directory.CreateDirectory(uploadsPath);
+                await file.CopyToAsync(ms);
+                var fileBytes = ms.ToArray();
+                var base64String = Convert.ToBase64String(fileBytes);
+                var contentType = file.ContentType;
+                
+                // Return as Data URI (e.g., data:image/jpeg;base64,...)
+                var dataUri = $"data:{contentType};base64,{base64String}";
+                
+                return Ok(new { url = dataUri });
             }
-
-            // Generate unique filename to avoid overwrites
-            var fileExtension = Path.GetExtension(file.FileName);
-            var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
-            var filePath = Path.Combine(uploadsPath, uniqueFileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            // The URL should be relative, starting with /uploads/
-            // Note: In local development, you'll need the base backend URL
-            return Ok(new { url = $"/uploads/{uniqueFileName}" });
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { message = $"Napaka pri nalaganju: {ex.Message}" });
+            return StatusCode(500, new { message = $"Napaka pri pretvorbi: {ex.Message}" });
         }
     }
 }
